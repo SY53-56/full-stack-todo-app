@@ -9,12 +9,12 @@ export default function Header() {
         <h1 className="text-5xl font-bold font-serif">TODo</h1>
       </div>
       <nav>
-        <ul className="flex gap-6 font-bold">
+        <ul className="flex gap-6 font-bold text-2xl">
           <li>
             <NavLink
               to="/"
               className={({ isActive }) =>
-                isActive ? "text-orange-500 mb-5 transition duration-100 border-b-orange-600 border-b-2" : "text-black"
+                isActive ? "text-orange-500 mb-5 outline-none transition duration-100 border-b-orange-600 border-b-2" : "text-black"
               }
             >
               List
@@ -24,7 +24,7 @@ export default function Header() {
             <NavLink
               to="/addlist"
               className={({ isActive }) =>
-                isActive ? "text-red-500 underline" : "text-black"
+                isActive ? "text-red-500 underline outline-none" : "text-black"
               }
             >
               Add List
