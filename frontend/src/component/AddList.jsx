@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { ToggleContext } from '../context/context';
 
 export default function AddList({ setTodo }) {
   const [form, setForm] = useState({
@@ -8,6 +10,7 @@ export default function AddList({ setTodo }) {
     description: "",
  
   });
+  const {toggle} = useContext(ToggleContext)
 
   const navigate= useNavigate()
   const handleSubmit = async (e) => {
@@ -22,11 +25,11 @@ export default function AddList({ setTodo }) {
   };
 
   return (
-    <div className='w-full h-[100vh] flex justify-center items-center'>
+    <div className={`w-full h-[100vh] flex justify-center items-center ${toggle==="dark"?"bg-gray-400 text-black":"bg-white text-black"}`}>
       <form onSubmit={handleSubmit} className='border rounded p-5  w-[500px] h-auto shadow-2xl flex flex-col gap-3'>
-        <h1 className='text-black text-3xl mb-3 text-center font-bold'>Add Todo</h1>
+        <h1 className=' text-3xl mb-3 text-center font-bold'>Add Todo</h1>
 
-        <label className='text-black font-bold '>Title</label>
+        <label className=' font-bold '>Title</label>
         <input
           type="text"
           name="title"
@@ -37,7 +40,7 @@ export default function AddList({ setTodo }) {
           required
         />
 
-        <label className='text-black font-bold'>Description</label>
+        <label className=' font-bold'>Description</label>
        <textarea  
           name="description"
           rows={4}
