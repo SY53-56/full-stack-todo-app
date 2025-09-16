@@ -9,6 +9,8 @@ import Updata from "./component/Updata";
 import ToggleContextProvider from "./context/ToggleContextProvider";
 import { useContext } from "react";
 import { ToggleContext } from "./context/context";
+import Login from "./component/Login";
+import Signup from "./component/Singup";
 
 function App() {
   let [todo, setTodo] = useState([]);
@@ -43,6 +45,8 @@ function AppContent({ todo, setTodo }) {
         <Route path="/" element={<List todo={todo} setTodo={setTodo} />} />
         <Route path="/addlist" element={<AddList setTodo={setTodo} />} />
         <Route path="/updata" element={<Updata todo={todo} setTodo={setTodo} />} />
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/Singup" element={<Signup/>}/>
       </Routes>
     </div>
   );

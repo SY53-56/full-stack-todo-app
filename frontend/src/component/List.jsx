@@ -1,41 +1,67 @@
-import axios from 'axios';
-import React from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-export default function List({ todo,setTodo }) {
+import axios from "axios";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { ToggleContext } from "../context/context";
 
+export default function List({ todo, setTodo }) {
+  const navigate = useNavigate();
+  const { toggle } = useContext(ToggleContext);
 
-  const navigate = useNavigate()
- const handleDelete= async(id)=>{
-try{
-    await axios.delete(`http://localhost:3000/api/task/${id}`)
-    setTodo((prev)=> prev.filter(todo =>todo._id !== id))
-}catch(e){
-  console.log(e)
-}
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3000/api/task/${id}`);
+      setTodo((prev) => prev.filter((t) => t._id !== id));
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
- }
   return (
-    <div className='w-full flex justify-center mt-10'>
-      <div className='w-[600px]'>
-        <h1 className='text-3xl font-bold mb-6 text-center text-gray-800'>My Todos</h1>
+    <div
+      className={`w-full min-h-screen flex justify-center py-12 px-4 transition-colors duration-300 ${
+        toggle === "dark" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"
+      }`}
+    >
+      <div className="w-full max-w-2xl">
+        <h1 className="text-4xl font-extrabold mb-8 text-center">
+          My Todos
+        </h1>
 
         {todo.length === 0 ? (
-          <p className='text-center text-gray-500'>No todos yet. Add some!</p>
+          <p className="text-center text-gray-400">
+            No todos yet. Add some!
+          </p>
         ) : (
-          <ul className='flex flex-col gap-4'>
-            {todo.map(item => (
+          <ul className="flex flex-col gap-5">
+            {todo.map((item) => (
               <li
                 key={item._id}
-                className='bg-white p-5 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300'
+                className={`rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-6 ${
+                  toggle === "dark" ? "bg-gray-800" : "bg-white"
+                }`}
               >
-                <div className='flex flex-col'>
-                  <h2 className='text-2xl font-semibold text-gray-900 mb-2'>{item.title}</h2>
-                  <p className='text-gray-700 mb-2'>{item.description}</p>
-                  <div className='flex gap-10'>
-                    <button onClick={()=>handleDelete(item._id)}  className='px-4 bg-red-500 transition py-1 text-white cursor-pointer hover:bg-red-600 rounded'>Delete</button>
-                     <button  className='px-4 bg-blue-500 transition py-1 text-white cursor-pointer hover:bg-blue-600 rounded' onClick={()=>navigate("/updata",{state:item})}>Edit Task</button>
+                <div className="flex flex-col">
+                  <h2 className="text-2xl font-bold mb-2 break-words">
+                    {item.title}
+                  </h2>
+                  <p className="mb-4 opacity-90 break-words">
+                    {item.description}
+                  </p>
+
+                  <div className="flex gap-4">
+                    <button
+                      onClick={() => handleDelete(item._id)}
+                      className="px-4 py-2 bg-red-600 text-white font-medium rounded-lg shadow hover:bg-red-700 active:scale-95 transition-all duration-200"
+                    >
+                      Delete
+                    </button>
+                    <button
+                      onClick={() => navigate("/updata", { state: item })}
+                      className="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg shadow hover:bg-blue-700 active:scale-95 transition-all duration-200"
+                    >
+                      Edit Task
+                    </button>
                   </div>
                 </div>
               </li>

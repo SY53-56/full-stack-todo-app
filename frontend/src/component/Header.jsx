@@ -2,9 +2,9 @@ import React,{useContext} from 'react';
 import { NavLink } from 'react-router-dom';
 import Button from './Button';
 import { ToggleContext } from '../context/context';
-
+import { FaSun, FaMoon } from "react-icons/fa";
 export default function Header() {
-    const {handleToggle }= useContext(ToggleContext)
+    const {handleToggle,toggle }= useContext(ToggleContext)
   return (
     <div className="flex w-full py-2 bg-blue-200 items-center justify-around">
       <div>
@@ -45,9 +45,9 @@ export default function Header() {
         </ul>
       </nav>
       <div className="flex gap-5">
-        <Button classname="bg-gray-700 text-white" name="Login" />
-        <Button classname="bg-gray-700 text-white" name="Signup" />
-        <Button onClick={handleToggle}  name="toggle"></Button>
+        <Button  classname="bg-gray-700 text-white" to="/login" name="Login" />
+        <Button classname="bg-gray-700 text-white" to="/singup" name="Signup" />
+        <Button onClick={handleToggle}  name={toggle === "dark" ? <FaSun /> : <FaMoon />} >  </Button>
       </div>
     </div>
   );
