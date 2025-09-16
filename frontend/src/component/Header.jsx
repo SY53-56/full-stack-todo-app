@@ -3,8 +3,11 @@ import { NavLink } from 'react-router-dom';
 import Button from './Button';
 import { ToggleContext } from '../context/context';
 import { FaSun, FaMoon } from "react-icons/fa";
+
+
 export default function Header() {
     const {handleToggle,toggle }= useContext(ToggleContext)
+    const {user,logout}= useContext(ToggleContext)
   return (
     <div className="flex w-full py-2 bg-blue-200 items-center justify-around">
       <div>
@@ -44,11 +47,40 @@ export default function Header() {
           </li>
         </ul>
       </nav>
-      <div className="flex gap-5">
-        <Button  classname="bg-gray-700 text-white" to="/login" name="Login" />
-        <Button classname="bg-gray-700 text-white" to="/singup" name="Signup" />
-        <Button onClick={handleToggle}  name={toggle === "dark" ? <FaSun /> : <FaMoon />} >  </Button>
-      </div>
+     <div className="flex gap-5 items-center">
+  {user ? (
+    // --- When user is logged in ---
+    <>
+      <span className="font-semibold">Hi, {user.username[1]}</span>
+      <Button
+        classname="bg-red-500 text-white"
+        onClick={logout}   // <-- logout function context se aayega
+        name="Logout"
+      />
+    </>
+  ) : (
+    // --- When user is NOT logged in ---
+    <>
+      <Button
+        classname="bg-gray-700 text-white"
+        to="/login"
+        name="Login"
+      />
+      <Button
+        classname="bg-gray-700 text-white"
+        to="/signup"
+        name="Signup"
+      />
+    </>
+  )}
+
+  {/* Theme Toggle Button */}
+  <Button
+    onClick={handleToggle}
+    name={toggle === "dark" ? <FaSun /> : <FaMoon />}
+  />
+</div>
+
     </div>
   );
 }

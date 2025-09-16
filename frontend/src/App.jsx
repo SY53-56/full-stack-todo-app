@@ -11,6 +11,8 @@ import { useContext } from "react";
 import { ToggleContext } from "./context/context";
 import Login from "./component/Login";
 import Signup from "./component/Singup";
+import UserContextProvider from "./context/UserContextProvider";
+
 
 function App() {
   let [todo, setTodo] = useState([]);
@@ -29,9 +31,11 @@ function App() {
   }, []);
 
   return (
-    <ToggleContextProvider >
+<UserContextProvider>
+      <ToggleContextProvider >
       <AppContent todo={todo} setTodo={setTodo} />
     </ToggleContextProvider>
+  </UserContextProvider>
   );
 }
 
