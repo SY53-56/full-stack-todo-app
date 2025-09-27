@@ -58,14 +58,7 @@ export default function Header() {
               Add List
             </NavLink>
           </li>
-          <li>
-            <NavLink
-              to="/profile"
-              className={({ isActive }) => (isActive ? "text-red-500" : "text-black")}
-            >
-              Profile
-            </NavLink>
-          </li>
+       
         </ul>
       </nav>
 

@@ -9,7 +9,7 @@ import Home from "./component/Home";
 import PrivateRoute from "./component/PrivateRouts";
 import ToggleContextProvider from "./context/ToggleContextProvider";
 import { ToggleContext } from "./context/context";
-import Profile from "./component/Profile";
+
 // Lazy load AddList
 const AddList = lazy(() => import("./component/AddList"));
 const List = lazy(()=>import("./component/List"))
@@ -70,14 +70,7 @@ function AppContent() {
             </PrivateRoute>
           }
         />
-        <Route
-          path="/profile"
-          element={
-            <PrivateRoute>
-              <Profile />
-            </PrivateRoute>
-          }
-        />
+      
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
