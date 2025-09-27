@@ -2,7 +2,7 @@ import React, { useContext, lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import Header from "./component/Header";
 
-import Updata from "./component/Updata";
+import Update from "./component/Updata";
 import Login from "./component/Login";
 import Signup from "./component/Singup";
 import Home from "./component/Home";
@@ -63,10 +63,10 @@ function AppContent() {
           }
         />
         <Route
-          path="/updata"
+          path="/update"
           element={
             <PrivateRoute>
-              <Updata />
+              <Update />
             </PrivateRoute>
           }
         />

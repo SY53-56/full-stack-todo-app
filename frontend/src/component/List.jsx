@@ -25,7 +25,7 @@ export default function List() {
   // Delete handler
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/tasks/api/task/${id}`,{withCredentials:true});
+      await axios.delete(`http://localhost:3000/tasks/api/task/${id}`, {withCredentials:true});
       setTodo((prev) => prev.filter((t) => t._id !== id));
     } catch (e) {
       console.error("Error deleting task:", e);
@@ -70,7 +70,7 @@ export default function List() {
                       Delete
                     </button>
                     <button
-                      onClick={() => navigate("/updata", { state: item })}
+                      onClick={() => navigate("/update", { state: item })}
                       className="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg shadow hover:bg-blue-700 active:scale-95 transition-all duration-200"
                     >
                       Edit Task
