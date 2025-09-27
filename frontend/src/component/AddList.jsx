@@ -3,18 +3,22 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToggleContext } from "../context/context";
 
-export default function AddList({ setTodo }) {
+export default function AddList({  }) {
   const [form, setForm] = useState({ title: "", description: "" });
-  const { toggle } = useContext(ToggleContext);
+  const { toggle ,setUser} = useContext(ToggleContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3000/api/addTask", form);
-      setTodo((prev) => [...prev, res.data]);
+
+    
+    let res=    await axios.post("http://localhost:3000/tasks/api/addTask", form,
+      {withCredentials:true}
+      );
+       setUser(res.data)
       setForm({ title: "", description: "" });
-      navigate("/"); // move navigation inside success
+      navigate("/list"); // move navigation inside success
     } catch (e) {
       console.error(e);
     }

@@ -1,37 +1,50 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
 import { ToggleContext } from "../context/context";
 
-export default function List({ todo, setTodo }) {
+export default function List() {
+  const [todo, setTodo] = useState([]); // local state
   const navigate = useNavigate();
   const { toggle } = useContext(ToggleContext);
 
+ useEffect(() => {
+  const fetchTodos = async () => {
+    try {
+      const res = await axios.get("http://localhost:3000/tasks/api", { withCredentials: true });
+      setTodo(res.data);
+    } catch (err) {
+      console.error("Error fetching todos:", err);
+    }
+  };
+
+  fetchTodos();
+}, []);
+
+
+  // Delete handler
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/task/${id}`);
+      await axios.delete(`http://localhost:3000/tasks/api/task/${id}`,{withCredentials:true});
       setTodo((prev) => prev.filter((t) => t._id !== id));
     } catch (e) {
-      console.error(e);
+      console.error("Error deleting task:", e);
     }
   };
 
   return (
     <div
       className={`w-full min-h-screen flex justify-center py-12 px-4 transition-colors duration-300 ${
-        toggle === "dark" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"
+        toggle === "dark"
+          ? "bg-gray-900 text-white"
+          : "bg-gray-100 text-gray-900"
       }`}
     >
       <div className="w-full max-w-2xl">
-        <h1 className="text-4xl font-extrabold mb-8 text-center">
-          My Todos
-        </h1>
+        <h1 className="text-4xl font-extrabold mb-8 text-center">My Todos</h1>
 
         {todo.length === 0 ? (
-          <p className="text-center text-gray-400">
-            No todos yet. Add some!
-          </p>
+          <p className="text-center text-gray-400">No todos yet. Add some!</p>
         ) : (
           <ul className="flex flex-col gap-5">
             {todo.map((item) => (
@@ -51,7 +64,7 @@ export default function List({ todo, setTodo }) {
 
                   <div className="flex gap-4">
                     <button
-                      onClick={() => handleDelete(item._id)}
+                      onClick={()=> handleDelete(item._id)}
                       className="px-4 py-2 bg-red-600 text-white font-medium rounded-lg shadow hover:bg-red-700 active:scale-95 transition-all duration-200"
                     >
                       Delete

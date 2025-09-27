@@ -1,25 +1,48 @@
-import React,{useContext} from 'react';
-import { NavLink } from 'react-router-dom';
-import Button from './Button';
-import { ToggleContext } from '../context/context';
+import React, { useContext } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import Button from "./Button";
+import { ToggleContext } from "../context/context";
 import { FaSun, FaMoon } from "react-icons/fa";
-
+import axios from "axios";
 
 export default function Header() {
-    const {handleToggle,toggle }= useContext(ToggleContext)
-    const {user,logout}= useContext(ToggleContext)
+  const { handleToggle, toggle, user, setUser } = useContext(ToggleContext);
+  const navigate = useNavigate();
+
+  console.log("Header user:", user);
+
+  // Logout function
+  const logoutUser = async () => {
+    try {
+      const res = await axios.get("http://localhost:3000/users/logout", { withCredentials: true });
+      console.log(res.data.message);
+
+      setUser(null);
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout failed:", error.response?.data || error);
+    }
+  };
+
   return (
-    <div className="flex w-full py-2 bg-blue-200 items-center justify-around">
+    <div className={`flex w-full py-2 bg-blue-200 items-center justify-around ${toggle=== "light"?"text-blue-950": "text-gray-800"}`}>
+      {/* Logo */}
       <div>
-        <h1 className="text-5xl font-bold font-serif">TODo</h1>
+   <Link to="/">
+           <h1 className="text-5xl font-bold font-serif">TODO</h1>
+   </Link>
       </div>
-      <nav>
+   
+      {/* Navigation */}
+      <nav className="hidden  lg:flex">
         <ul className="flex gap-6 font-bold text-2xl">
           <li>
             <NavLink
-              to="/"
+              to="/list"
               className={({ isActive }) =>
-                isActive ? "text-orange-500 mb-5 outline-none transition duration-100 border-b-orange-600 border-b-2" : "text-black"
+                isActive
+                  ? "text-orange-500 mb-5 outline-none transition duration-100 border-b-orange-600 border-b-2"
+                  : "text-black"
               }
             >
               List
@@ -38,49 +61,47 @@ export default function Header() {
           <li>
             <NavLink
               to="/profile"
-              className={({ isActive }) =>
-                isActive ? "text-red-500" : "text-black"
-              }
+              className={({ isActive }) => (isActive ? "text-red-500" : "text-black")}
             >
               Profile
             </NavLink>
           </li>
         </ul>
       </nav>
-     <div className="flex gap-5 items-center">
-  {user ? (
-    // --- When user is logged in ---
-    <>
-      <span className="font-semibold">Hi, {user.username[1]}</span>
-      <Button
-        classname="bg-red-500 text-white"
-        onClick={logout}   // <-- logout function context se aayega
-        name="Logout"
-      />
-    </>
-  ) : (
-    // --- When user is NOT logged in ---
-    <>
-      <Button
-        classname="bg-gray-700 text-white"
-        to="/login"
-        name="Login"
-      />
-      <Button
-        classname="bg-gray-700 text-white"
-        to="/signup"
-        name="Signup"
-      />
-    </>
-  )}
 
-  {/* Theme Toggle Button */}
-  <Button
-    onClick={handleToggle}
-    name={toggle === "dark" ? <FaSun /> : <FaMoon />}
-  />
-</div>
+      {/* Right side buttons */}
+      <div className="flex gap-5 items-center ml-5 ">
+        {user ? (
+          <>
+            <span className="font-semibold flex ">Hi {user.username}</span>
+            <Button
+              className="bg-red-500 text-white px-4 py-2 rounded"
+              onClick={logoutUser}
+              name="Logout"
+            />
+          </>
+        ) : (
+          <>
+            <Button
+              className="bg-gray-700 text-white px-4 py-2 rounded"
+              to="/login"
+              name="Login"
+            />
+            <Button
+              className="bg-gray-700 text-white px-4 py-2 rounded"
+              to="/signup"
+              name="Signup"
+            />
+          </>
+        )}
 
+        {/* Theme Toggle Button */}
+        <Button
+          onClick={handleToggle}
+          className="bg-yellow-400 text-black px-3 py-2 rounded"
+          name={toggle === "dark" ? <FaSun /> : <FaMoon />}
+        />
+      </div>
     </div>
   );
 }
