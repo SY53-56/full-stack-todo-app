@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div
       className={`min-h-screen flex flex-col items-center justify-start p-6 transition-colors duration-500 ${
-        toggle === "dark" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"
+        toggle === "dark" ? "bg-gray-900 text-white" : "bg-gray-400 text-gray-900"
       }`}
     >
       {/* Welcome message */}

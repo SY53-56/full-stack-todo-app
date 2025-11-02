@@ -6,9 +6,10 @@ import Footer from './component/Footer';
 export default function Layout() {
   const location = useLocation();
 
-  // Define which paths should show header/footer
   const pathsWithLayout = ["/", "/list"];
-  const showLayout = pathsWithLayout.includes(location.pathname);
+  const showLayout = pathsWithLayout.some(path =>
+    location.pathname.startsWith(path)
+  );
 
   return (
     <div>

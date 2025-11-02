@@ -1,6 +1,7 @@
 import React, { useContext, lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import Header from "./component/Header";
+import Footer from "./component/Footer";   // ✅ added
 
 import Update from "./component/Updata";
 import Login from "./component/Login";
@@ -10,9 +11,9 @@ import PrivateRoute from "./component/PrivateRouts";
 import ToggleContextProvider from "./context/ToggleContextProvider";
 import { ToggleContext } from "./context/context";
 
-// Lazy load AddList
 const AddList = lazy(() => import("./component/AddList"));
-const List = lazy(()=>import("./component/List"))
+const List = lazy(() => import("./component/List"));
+
 function App() {
   return (
     <ToggleContextProvider>
@@ -27,12 +28,11 @@ function AppContent() {
   return (
     <div
       className={`${
-        toggle === "dark"
-          ? "bg-white text-black"
-          : "bg-black text-white"
+        toggle === "dark" ? "bg-white text-black" : "bg-black text-white"
       } min-h-screen transition duration-500`}
     >
       <Header />
+
       <Routes>
         <Route
           path="/"
@@ -42,16 +42,18 @@ function AppContent() {
             </PrivateRoute>
           }
         />
+
         <Route
           path="/list"
           element={
             <PrivateRoute>
-            <Suspense fallback={<div>Loading List...</div>}>
-        <List />
-      </Suspense>
+              <Suspense fallback={<div>Loading List...</div>}>
+                <List />
+              </Suspense>
             </PrivateRoute>
           }
         />
+
         <Route
           path="/addlist"
           element={
@@ -62,6 +64,7 @@ function AppContent() {
             </PrivateRoute>
           }
         />
+
         <Route
           path="/update"
           element={
@@ -70,13 +73,14 @@ function AppContent() {
             </PrivateRoute>
           }
         />
-      
+
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
+
+      <Footer /> {/* ✅ Now footer will show */}
     </div>
   );
 }
 
 export default App;
-

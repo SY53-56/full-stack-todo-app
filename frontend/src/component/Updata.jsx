@@ -55,11 +55,11 @@ const handleSubmit = async (e) => {
 
   return (
    <div className={`w-full h-[100vh] flex justify-center items-center ${
-  toggle === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
+  toggle === "dark" ? "bg-gray-900 text-white" : "bg-gray-400 text-black"
 }`}>
   <form
     onSubmit={handleSubmit}
-    className={`border rounded p-5 w-[500px] flex flex-col gap-3 shadow-lg mt-5 ${
+    className={`border rounded-lg p-5 w-[500px]  flex flex-col gap-3 shadow-lg mt-5 ${
       toggle === "dark" ? "bg-gray-700 text-white" : "bg-gray-100 text-black"
     }`}
   >
@@ -83,7 +83,7 @@ const handleSubmit = async (e) => {
     />
     <button
       type="submit"
-      className="bg-green-500 text-white p-2 rounded hover:bg-green-600 transition"
+      className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 cursor-pointer transition"
     >
       Update
     </button>

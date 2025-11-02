@@ -37,7 +37,7 @@ export default function List() {
       className={`w-full min-h-screen flex justify-center py-12 px-4 transition-colors duration-300 ${
         toggle === "dark"
           ? "bg-gray-900 text-white"
-          : "bg-gray-100 text-gray-900"
+          : "bg-gray-400 text-gray-900"
       }`}
     >
       <div className="w-full max-w-2xl">

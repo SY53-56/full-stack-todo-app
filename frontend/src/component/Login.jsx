@@ -37,7 +37,7 @@ setIsAuth(true);
 
   return (
     <div  className={`w-full min-h-screen flex justify-center items-center ${
-        toggle === "dark" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"
+        toggle === "dark" ? "bg-gray-900 text-white" : "bg-gray-400 text-gray-900"
       }`}>
         <form action="" onSubmit={handleSubmit} className={`w-full max-w-md p-8 rounded-2xl shadow-xl transition-colors duration-300 ${
           toggle === "dark" ? "bg-gray-800" : "bg-white"
