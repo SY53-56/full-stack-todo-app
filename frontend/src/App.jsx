@@ -1,7 +1,7 @@
 import React, { useContext, lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import Header from "./component/Header";
-import Footer from "./component/Footer";   // ✅ added
+
 
 import Update from "./component/Updata";
 import Login from "./component/Login";
@@ -78,7 +78,7 @@ function AppContent() {
         <Route path="/signup" element={<Signup />} />
       </Routes>
 
-      <Footer /> {/* ✅ Now footer will show */}
+{/* ✅ Now footer will show */}
     </div>
   );
 }

@@ -10,20 +10,20 @@ require('dotenv').config();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.CLIENT_URL ,
     credentials: true,
   })
 );
 
 // MongoDB connection
-mongoose.connect("mongodb://localhost:27017/todolist", {
+mongoose.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", () => console.log("✅ Database connected"));
+db.once("open", () => console.log("✅ Database connected sahul"));
 
 // Middleware
 app.use(express.json());
