@@ -14,7 +14,7 @@ export default function Header() {
   // Logout function
   const logoutUser = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/users/logout", { withCredentials: true });
+      const res = await axios.get("https://full-stack-todo-app-8.onrender.com/users/logout", { withCredentials: true });
       console.log(res.data.message);
 
       setUser(null);

@@ -11,7 +11,7 @@ export default function List() {
  useEffect(() => {
   const fetchTodos = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/tasks/api", { withCredentials: true });
+      const res = await axios.get("https://full-stack-todo-app-8.onrender.com/tasks/api", { withCredentials: true });
       setTodo(res.data);
     } catch (err) {
       console.error("Error fetching todos:", err);
@@ -25,7 +25,7 @@ export default function List() {
   // Delete handler
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/tasks/api/task/${id}`, {withCredentials:true});
+      await axios.delete(`https://full-stack-todo-app-8.onrender.com/tasks/api/task/${id}`, {withCredentials:true});
       setTodo((prev) => prev.filter((t) => t._id !== id));
     } catch (e) {
       console.error("Error deleting task:", e);
