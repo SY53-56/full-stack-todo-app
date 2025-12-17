@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
@@ -6,41 +7,30 @@ const userRoutes = require("./routes/UserRoutes");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
-require('dotenv').config();
-
 app.use(
   cors({
-    origin: process.env.CLIENT_URL ,
+    origin: process.env.CLIENT_URL,
     credentials: true,
   })
 );
 
 // MongoDB connection
-mongoose.connect(process.env.MONGO_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(process.env.MONGO_URL)
+.then(() => console.log("✅ Database connected"))
+.catch(err => console.error("❌ MongoDB connection error sahul:", err));
 
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", () => console.log("✅ Database connected sahul"));
-
-// Middleware
 app.use(express.json());
-app.use(cookieParser()); // ✅ Correct usage
+app.use(cookieParser());
 
 // Routes
 app.use("/tasks", taskRoutes);
 app.use("/users", userRoutes);
 
 app.get("/sahul", (req, res) => {
-     console.log("TOKEN:", req.cookies?.token);
+  console.log("TOKEN:", req.cookies?.token);
   console.log("JWT_SECRET is:", process.env.JWT_SECRET);
-  res.send("sahul");
-});
-app.get("/test-cookie", (req, res) => {
-  console.log(req.cookies.token); // should print the token
-  res.send("Check console");
+  res.send("Backend working ✅");
 });
 
-app.listen(3000, () => console.log("Server running on http://localhost:3000"));
+const PORT = process.env.PORT;
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
